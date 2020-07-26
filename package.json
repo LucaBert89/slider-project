@@ -1,0 +1,24 @@
+{
+  "name": "slider-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"lite-server"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucaBert89/slider-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucaBert89/slider-project/issues"
+  },
+  "homepage": "https://github.com/LucaBert89/slider-project#readme",
+  "dependencies": {
+    "lite-server": "^2.5.4"
+  }
+}
