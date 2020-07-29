@@ -23,10 +23,12 @@ let resizeTimeout;
     for(i=0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", changeSlide)
         window.addEventListener("keydown", changeSlideKey)
-        document.addEventListener('touchstart', Touchleft);
-        document.addEventListener('touchend', Touchmoving, false);
+        document.addEventListener('touchstart', Swipe);
+        document.addEventListener('touchend', endSwipe, false);
     }
 })();
+
+
 
 function setSlider() {
     vw = window.innerWidth;
@@ -41,79 +43,77 @@ function handleResize() {
     setSlider();
 }
 
+//change slide with mouse click 
 function changeSlide() {
-    
+   
     let action = this.getAttribute("data-action");
     if(action == "p") {
-        if(current > 0) {
-            current--;
-        } else {
-            current = totalTestimonials -1;
-        }
-        nextSlide(current);
+        next();
+        goSlide(current);
     } 
     else if(action == "n") {
-        if(current < totalTestimonials-1) {
-            current = totalTestimonials -1;
-        } else if (current >= totalTestimonials-1) {   
-            current--;  
-        }
-        nextSlide(current);
+        prev();
+        goSlide(current);
     }
-
+   
   
 }
 
-
+//change slide with keyboard click
 function changeSlideKey(event) {
     if(event.keyCode == 37) {
        
-        if(current > 0) {
-            current--;
-        } else {
-            current = totalTestimonials -1;
-        }
-        nextSlide(current);
+        next();
+        goSlide(current);
     } 
     else if(event.keyCode == 39) {
-        if(current < totalTestimonials-1) {
-            current = totalTestimonials -1;
-        } else if (current >= totalTestimonials-1) {   
-            current--;  
-        }
-        nextSlide(current);
+        prev();
+        goSlide(current);
     }
 }
 
-function Touchleft(event)    {
+
+//change slide with touch
+function Swipe(event) {
     var touch = event.touches[0];
     startX = touch.pageX;
 }
 
-function Touchmoving (event) {
-   
+function endSwipe(event) {
     var touch = event.changedTouches[0];
     dist = touch.pageX - startX;
-    console.log(dist, touch, startX);
     if(dist > 20 ) {
-        if(current > 0) {
-            current--;
-        } else {
-            current = totalTestimonials -1;
-        }
-        nextSlide(current);
+        next();
+        goSlide(current);
     } else if(dist < 0 && dist > -300) {
-        if(current < totalTestimonials-1) {
-            current = totalTestimonials -1;
-        } else if (current >= totalTestimonials-1) {   
-            current--;  
-        }
-        nextSlide(current);
+        prev();
+        goSlide(current);
     }
-    event.preventDefault();
+     return false;
 }
 
-function nextSlide(change) {    
+//choosing next or prev slide
+function next() {
+    if(current > 0) {
+        current--;
+    } else {
+        current = totalTestimonials -1;
+    }
+}
+
+function prev () {
+    if(current < totalTestimonials-1) {
+        current = totalTestimonials -1;
+    } else if (current >= totalTestimonials-1) {   
+        current--;  
+    }
+}
+
+
+
+//take current and go to the right slide
+function goSlide(change) {    
     let newWidth = change * vw;
     testimonialLetters.style.transform = "translate(" + -newWidth + "px)";
 }
+
