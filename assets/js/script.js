@@ -5,7 +5,7 @@ const totalTestimonials = testimonials.length;
 
 let current = 0;
 let vw;
-
+let startX;
 let resizeTimeout;
 
 (function init() {
@@ -23,6 +23,8 @@ let resizeTimeout;
     for(i=0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", changeSlide)
         window.addEventListener("keydown", changeSlideKey)
+        document.addEventListener('touchstart', Touchleft);
+        document.addEventListener('touchend', Touchmoving, false);
     }
 })();
 
@@ -83,6 +85,33 @@ function changeSlideKey(event) {
     }
 }
 
+function Touchleft(event)    {
+    var touch = event.touches[0];
+    startX = touch.pageX;
+}
+
+function Touchmoving (event) {
+   
+    var touch = event.changedTouches[0];
+    dist = touch.pageX - startX;
+    console.log(dist, touch, startX);
+    if(dist > 20 ) {
+        if(current > 0) {
+            current--;
+        } else {
+            current = totalTestimonials -1;
+        }
+        nextSlide(current);
+    } else if(dist < 0 && dist > -300) {
+        if(current < totalTestimonials-1) {
+            current = totalTestimonials -1;
+        } else if (current >= totalTestimonials-1) {   
+            current--;  
+        }
+        nextSlide(current);
+    }
+    event.preventDefault();
+}
 
 function nextSlide(change) {    
     let newWidth = change * vw;
