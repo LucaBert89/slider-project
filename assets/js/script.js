@@ -82,10 +82,10 @@ function Swipe(event) {
 function endSwipe(event) {
     var touch = event.changedTouches[0];
     dist = touch.pageX - startX;
-    if(dist > 20 ) {
+    if(dist > 50 && dist < 300 ) {
         next();
         goSlide(current);
-    } else if(dist < 0 && dist > -300) {
+    } else if(dist < -50 && dist > -300) {
         prev();
         goSlide(current);
     }
