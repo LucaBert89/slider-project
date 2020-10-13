@@ -7,3 +7,5 @@ Languages used:
 - HTML
 - CSS
 - JS
+
+https://tomorrowslider-project.netlify.app/
